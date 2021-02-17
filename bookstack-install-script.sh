@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Notes:
+# Notes: Please check prerequisites and documentation in README.md or at:
+#        https://github.com/ashleycawley/bookstack-install-script
 
 # Exit Codes:
 # 0 - OK
