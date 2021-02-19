@@ -39,6 +39,9 @@ sed -i "s/database_user_password/$DB_PASS_SANITISED/g" .env
 # Replaces example site URL with users real one
 sed -i "s/https:\/\/example.com/$SITE_URL_SANITISED/g" .env
 
+# Replaces SMTP Email method for PHP sendmail
+sed -i "s/MAIL_DRIVER=smtp/MAIL_DRIVER=sendmail/g" .env
+
 # Generates Unique Application Key
 php artisan key:generate --force
 
