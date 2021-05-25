@@ -65,18 +65,15 @@ DB_PASS_SANITISED=$(echo $DB_PASS | sed 's#\([]\#\%\@\*\$\/&[]\)#\\\1#g')
 SITE_URL_SANITISED=$(echo $SITE_URL | sed 's#\([]\#\%\@\*\$\/&[]\)#\\\1#g')
 
 
-echo " ### Settings Review ###
+whiptail --title "Settings Review" --msgbox "Here are your settings: \n\n  Username:       $USER \n  Web Root:   /home/$USER/site/public_html \n  Website:    $SITE_URL \n  DB Name:    $DB_NAME \n  DB Pass:    $DB_PASS_SANITISED" 14 78
 
- User:       $USER
- Web Root:   /home/$USER/site/public_html
- Website:    $SITE_URL
- DB Name:    $DB_NAME
- DB Pass:    $DB_PASS_SANITISED
+if (whiptail --title "Web Root Check" --yesno "Are you happy for me to install BookStack to $WEB_ROOT ? \nSize of that folder currently: $(du -sh $WEB_ROOT | awk '{print $1}')" 10 65); then
+    STATE="OK"
+else
+    echo "Cancelling."
+    exit 2
+fi
 
-
-" && sleep 5
-
-# Main Script
 cd "$WEB_ROOT" &>/dev/null
 WEB_ROOT_DIR_STATUS=$(echo $?)
 
