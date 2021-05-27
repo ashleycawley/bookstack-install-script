@@ -108,7 +108,7 @@ then
 fi
 
 # Pulls down BookStack from Repository
-echo "Pausing before cloning...." && sleep 60
+echo "Downloading BookStack Software...." && sleep 5
 git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch
 
 cd ./BookStack/
