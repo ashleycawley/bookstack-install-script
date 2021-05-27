@@ -16,7 +16,7 @@
 # 2 - User exited whiptail menu whilst at data gathering stage
 
 # Variables
-WEB_ROOT="/home/user/$(whoami)/public_html" # Full Path. ie. /home/user/public_html
+WEB_ROOT="/home/$(whoami)/site/public_html" # Full Path. ie. /home/user/public_html
 # $(echo "$(hostname)$(hostname -I)$(date +%s)$(echo $RANDOM)" | sha1sum | cut -c1-12) # Randomly generated database password
 
 # Root Check
@@ -31,7 +31,7 @@ else
 	fi
 
 # Whiptail GUI Menu gathering settings from the sysadmin
-SITE_URL=$(whiptail --inputbox "Ener in the Site URL (with NO trailing slash):" 8 65 https:// --title "Site URL" 3>&1 1>&2 2>&3)
+SITE_URL=$(whiptail --inputbox "Enter in the Site URL (with NO trailing slash):" 8 65 https:// --title "Site URL" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo ""
@@ -65,14 +65,7 @@ DB_PASS_SANITISED=$(echo $DB_PASS | sed 's#\([]\#\%\@\*\$\/&[]\)#\\\1#g')
 SITE_URL_SANITISED=$(echo $SITE_URL | sed 's#\([]\#\%\@\*\$\/&[]\)#\\\1#g')
 
 
-whiptail --title "Settings Review" --msgbox "Here are your settings: \n\n  Username:       $USER \n  Web Root:   /home/$USER/site/public_html \n  Website:    $SITE_URL \n  DB Name:    $DB_NAME \n  DB Pass:    $DB_PASS_SANITISED" 14 78
-
-if (whiptail --title "Web Root Check" --yesno "Are you happy for me to install BookStack to $WEB_ROOT ? \nSize of that folder currently: $(du -sh $WEB_ROOT | awk '{print $1}')" 10 65); then
-    STATE="OK"
-else
-    echo "Cancelling."
-    exit 2
-fi
+whiptail --title "Settings Review" --msgbox "Here are your settings: \n\n  Username:   $USER \n  Web Root:   /home/$USER/site/public_html \n  Website:    $SITE_URL \n  DB Name:    $DB_NAME \n  DB Pass:    $DB_PASS_SANITISED" 14 78
 
 cd "$WEB_ROOT" &>/dev/null
 WEB_ROOT_DIR_STATUS=$(echo $?)
@@ -93,6 +86,13 @@ then
             echo "There is still a problem with $WEB_ROOT so we're now exiting..."
             exit 2
         else
+            if (whiptail --title "Web Root Check" --yesno "Are you happy for me to install BookStack to $WEB_ROOT ? \nSize of that folder currently: `du -sh $WEB_ROOT | awk '{print $1}'`" 10 65)
+            then
+                STATE="OK"
+            else
+                echo "Cancelling."
+                exit 2
+            fi
             echo "Great, $WEB_ROOT works for me, so lets install BookStack there then..." && sleep 5
         fi
     else
