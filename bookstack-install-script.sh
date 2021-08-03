@@ -107,6 +107,14 @@ then
 
 fi
 
+# Cleans out public_html folder which is not needed with this BookStack setup
+if [ -z "$(ls -A ${WEB_ROOT}public_html)" ]; then
+   echo "Removing empty public_html folder as it is not needed"
+   rm -fr ${WEB_ROOT}public_html
+else
+   echo "Document Root Ready for Installation"
+fi
+
 # Pulls down BookStack from Repository
 echo "Downloading BookStack Software from https://github.com/BookStackApp/BookStack.git" && sleep 2
 git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch .
