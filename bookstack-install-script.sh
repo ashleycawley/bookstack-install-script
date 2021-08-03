@@ -108,30 +108,36 @@ then
 fi
 
 # Pulls down BookStack from Repository
-echo "Downloading BookStack Software...." && sleep 5
+echo "Downloading BookStack Software from https://github.com/BookStackApp/BookStack.git" && sleep 2
 git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch
 
-cd ./BookStack/
+# If BookStack folder does not exist then create it
+if [ ! -d "cd ~site/public_html/BookStack/" ]
+then
+    mkdir -p ~site/public_html/BookStack/
+fi
 
-# Install using Composer
+cd ~site/public_html/BookStack/
+
+echo "Installing using Composer"
 composer install --no-dev
 
-# Setup configuration file
+echo "Setting up configuration file"
 cp .env.example .env
 
-# Updates configuration file with our database details
+echo "Updating configuration file with our database details"
 sed -i "s/database_database/$DB_NAME/g" .env
 sed -i "s/database_username/$DB_USER/g" .env
 sed -i "s/database_user_password/$DB_PASS_SANITISED/g" .env
 
-# Replaces example site URL with users real one
+echo "Replacing example site URL with users real one"
 sed -i "s/https:\/\/example.com/$SITE_URL_SANITISED/g" .env
 
-# Replaces SMTP Email method for PHP sendmail
+echo "Replacing SMTP Email method for PHP sendmail"
 sed -i "s/MAIL_DRIVER=smtp/MAIL_DRIVER=sendmail/g" .env
 
-# Generates Unique Application Key
+echo "Generate Unique Application Key"
 php artisan key:generate --force
 
-# Populates database with data structure
+echo "Populate database with data structure"
 php artisan migrate --force
