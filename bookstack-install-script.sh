@@ -111,13 +111,13 @@ fi
 echo "Downloading BookStack Software from https://github.com/BookStackApp/BookStack.git" && sleep 2
 git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch
 
-# If BookStack folder does not exist then create it
-if [ ! -d "cd ~site/public_html/BookStack/" ]
-then
-    mkdir -p ~site/public_html/BookStack/
-fi
+# # If BookStack folder does not exist then create it
+# if [ ! -d "cd ~site/public_html/BookStack/" ]
+# then
+#     mkdir -p ~site/public_html/BookStack/
+# fi
 
-cd ~site/public_html/BookStack/
+# cd ~site/public_html/BookStack/
 
 echo "Installing using Composer"
 composer install --no-dev
