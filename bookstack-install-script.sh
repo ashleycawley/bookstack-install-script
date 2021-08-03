@@ -135,3 +135,12 @@ php artisan key:generate --force
 
 echo "Populate database with data structure"
 php artisan migrate --force
+
+echo "
+BookStack installed succesfully on $SITE_URL - IP: `hostname -I`
+
+You can use this local hosts file rule to visit the site before DNS is propagating:
+`hostname -I` $SITE_URL
+"
+
+exit 0
