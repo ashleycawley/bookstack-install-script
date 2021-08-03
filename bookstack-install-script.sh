@@ -16,7 +16,7 @@
 # 2 - User exited whiptail menu whilst at data gathering stage
 
 # Variables
-WEB_ROOT="/home/$(whoami)/site/public_html" # Full Path. ie. /home/user/public_html
+WEB_ROOT="/home/$(whoami)/site/" # Full Path. ie. /home/user/site/
 # $(echo "$(hostname)$(hostname -I)$(date +%s)$(echo $RANDOM)" | sha1sum | cut -c1-12) # Randomly generated database password
 
 # Root Check
@@ -65,7 +65,7 @@ DB_PASS_SANITISED=$(echo $DB_PASS | sed 's#\([]\#\%\@\*\$\/&[]\)#\\\1#g')
 SITE_URL_SANITISED=$(echo $SITE_URL | sed 's#\([]\#\%\@\*\$\/&[]\)#\\\1#g')
 
 
-whiptail --title "Settings Review" --msgbox "Here are your settings: \n\n  Username:   $USER \n  Web Root:   /home/$USER/site/public_html \n  Website:    $SITE_URL \n  DB Name:    $DB_NAME \n  DB Pass:    $DB_PASS_SANITISED" 14 78
+whiptail --title "Settings Review" --msgbox "Here are your settings: \n\n  Username:   $USER \n  Web Root:   /home/$USER/site \n  Website:    $SITE_URL \n  DB Name:    $DB_NAME \n  DB Pass:    $DB_PASS_SANITISED" 14 78
 
 cd "$WEB_ROOT" &>/dev/null
 WEB_ROOT_DIR_STATUS=$(echo $?)
