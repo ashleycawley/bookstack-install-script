@@ -109,9 +109,9 @@ fi
 
 # Pulls down BookStack from Repository
 echo "Downloading BookStack Software from https://github.com/BookStackApp/BookStack.git" && sleep 2
-git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch
+git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch .
 
-cd ./BookStack/
+# cd ./BookStack/
 
 echo "Installing using Composer"
 composer install --no-dev
